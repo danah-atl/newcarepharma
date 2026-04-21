@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Care Pharma</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --o:#FEA101;--od:#E08E00;--ol:#FFF5E0;
+  --b:#026AAB;--bd:#015588;--bl:#E3F1FA;
+  --bg:#FAFBFC;--t:#1A1D2B;--tl:#6B7280;--w:#FFFFFF;
+  --br:#E5E7EB;--sh:0 4px 30px rgba(2,106,171,.07);
+  --shl:0 20px 60px rgba(2,106,171,.1);--r:16px;--rs:8px;
+  --fd:'Playfair Display',Georgia,serif;--fb:'DM Sans',sans-serif;
+  --tr:.4s cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);color:var(--t);background:var(--bg);line-height:1.7;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.page{display:none}.page.active{display:block}
+
+/* NAV */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--br);transition:var(--tr)}
+.nb{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo img{height:48px}
+.nl{display:flex;align-items:center;gap:4px;list-style:none}
+.nl a,.nl span{font-size:.86rem;font-weight:500;padding:8px 13px;border-radius:8px;transition:var(--tr);cursor:pointer;display:inline-block}
+.nl a:hover,.nl span:hover{background:var(--bl);color:var(--b)}
+.dd{position:relative}
+.dm{position:absolute;top:100%;left:0;min-width:200px;background:var(--w);border:1px solid var(--br);border-radius:var(--rs);box-shadow:var(--shl);padding:8px;opacity:0;visibility:hidden;transform:translateY(8px);transition:var(--tr);z-index:200}
+.dd:hover .dm{opacity:1;visibility:visible;transform:translateY(0)}
+.dm a{display:block;padding:10px 14px;border-radius:6px;font-size:.85rem}
+.ncta{background:var(--o)!important;color:var(--w)!important;padding:10px 20px!important;border-radius:50px!important;font-weight:600!important}
+.ncta:hover{background:var(--od)!important}
+.lang-sw{display:flex;align-items:center;border:1px solid var(--br);border-radius:50px;overflow:hidden;margin-left:8px}
+.lang-btn{padding:6px 12px;font-size:.78rem;font-weight:600;cursor:pointer;border:none;background:transparent;transition:var(--tr);font-family:var(--fb);color:var(--tl)}
+.lang-btn.active{background:var(--b);color:var(--w)}
+.mt{display:none;background:none;border:none;cursor:pointer;width:40px;height:40px;flex-direction:column;justify-content:center;align-items:center;gap:5px}
+.mt span{width:22px;height:2px;background:var(--t);border-radius:2px}
+.mm{display:none;position:fixed;top:72px;left:0;right:0;background:var(--w);border-bottom:1px solid var(--br);padding:16px 24px;z-index:99;box-shadow:var(--shl);max-height:calc(100vh - 72px);overflow-y:auto}
+.mm.open{display:flex;flex-direction:column;gap:6px}
+.mm a{padding:12px 16px;border-radius:8px;font-weight:500;font-size:.95rem;cursor:pointer}
+.mm a:hover{background:var(--bl);color:var(--b)}
+.mm .lang-sw{margin:12px 0 0;align-self:flex-start}
+
+/* BTNS */
+.bp{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:var(--b);color:var(--w);border:none;border-radius:50px;font-size:.93rem;font-weight:600;cursor:pointer;transition:var(--tr);font-family:var(--fb);box-shadow:0 4px 20px rgba(2,106,171,.3)}
+.bp:hover{background:var(--bd);transform:translateY(-2px)}
+.bo{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:var(--o);color:var(--w);border:none;border-radius:50px;font-size:.93rem;font-weight:600;cursor:pointer;transition:var(--tr);font-family:var(--fb)}
+.bo:hover{background:var(--od);transform:translateY(-2px)}
+.bs{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:var(--w);color:var(--t);border:1px solid var(--br);border-radius:50px;font-size:.93rem;font-weight:600;cursor:pointer;transition:var(--tr);font-family:var(--fb)}
+.bs:hover{border-color:var(--b);color:var(--b);transform:translateY(-2px)}
+.sl{font-family:var(--fb);font-weight:600;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--o);margin-bottom:12px}
+.st{font-family:var(--fd);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--t);line-height:1.2;margin-bottom:16px}
+.sd{font-size:1.05rem;color:var(--tl);max-width:560px;line-height:1.8}
+
+/* PAGE HERO */
+.ph{padding:120px 0 60px;position:relative;overflow:hidden}
+.ph.phb{background:linear-gradient(135deg,var(--b),var(--bd))}
+.ph.pho{background:linear-gradient(135deg,var(--o),var(--od))}
+.ph .container{position:relative;z-index:1}
+.ph h1{font-family:var(--fd);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:white;margin-bottom:12px}
+.ph p{color:rgba(255,255,255,.85);font-size:1.1rem;max-width:500px}
+.ph .bc{margin-bottom:16px;font-size:.85rem;color:rgba(255,255,255,.6)}
+.ph .bc a{color:rgba(255,255,255,.8);cursor:pointer}
+.ph .bc a:hover{color:white}
+.ph::after{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 70%);border-radius:50%}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:72px;background:linear-gradient(135deg,var(--w) 0%,var(--bl) 40%,var(--ol) 100%)}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(2,106,171,.08) 0%,transparent 70%);border-radius:50%}
+.hi{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hc{animation:fu 1s ease-out}
+.hbg{display:inline-flex;align-items:center;gap:8px;background:var(--w);padding:6px 16px 6px 8px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--b);margin-bottom:24px;border:1px solid var(--br);box-shadow:var(--sh)}
+.hbg .dot{width:8px;height:8px;background:var(--o);border-radius:50%;animation:pu 2s infinite}
+.hero h1{font-family:var(--fd);font-size:clamp(2.5rem,5vw,3.8rem);font-weight:700;line-height:1.15;margin-bottom:20px}
+.hero .cb{color:var(--b)}.hero .co{color:var(--o)}
+.hero>div p{font-size:1.1rem;color:var(--tl);margin-bottom:36px;max-width:480px}
+.hbt{display:flex;gap:16px;flex-wrap:wrap}
+.hv{position:relative;display:flex;justify-content:center;align-items:center;animation:fu 1s ease-out .3s both}
+.hiw{width:100%;max-width:500px;border-radius:32px;overflow:hidden;box-shadow:var(--shl)}
+.hiw img{width:100%;display:block}
+.hf{position:absolute;background:var(--w);border-radius:var(--r);padding:16px 20px;box-shadow:var(--shl);animation:fl 4s ease-in-out infinite;z-index:5}
+.hf.f1{top:20px;right:-20px}.hf.f2{bottom:80px;left:-30px;animation-delay:1.5s}
+.hf .fla{font-size:.7rem;color:var(--tl);text-transform:uppercase;letter-spacing:1px}
+.hf .fv{font-size:1.3rem;font-weight:700;color:var(--b)}
+.hf .fv.o{color:var(--o)}
+
+/* STATS */
+.sts{padding:60px 0;background:var(--w);border-top:3px solid var(--o);border-bottom:1px solid var(--br)}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+.si h3{font-family:var(--fd);font-size:2.5rem;font-weight:700;color:var(--b);margin-bottom:4px}
+.si p{font-size:.9rem;color:var(--tl);font-weight:500}
+
+/* ABOUT */
+.abs{padding:100px 0}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.ai{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--shl)}
+.ai img{width:100%;display:block}
+.abg{position:absolute;bottom:20px;left:20px;background:var(--o);color:white;padding:10px 20px;border-radius:50px;font-weight:600;font-size:.85rem}
+.afs{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+.af{display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--bg);border-radius:var(--rs);transition:var(--tr)}
+.af:hover{background:var(--bl)}
+.af .ic{width:40px;height:40px;min-width:40px;background:var(--b);color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.af h4{font-size:.95rem;font-weight:600;margin-bottom:2px}
+.af p{font-size:.85rem;color:var(--tl)}
+
+/* CATEGORIES */
+.cs{padding:100px 0;background:var(--w)}
+.ch{text-align:center;margin-bottom:60px}
+.ch .sd{margin:0 auto}
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.cc{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/4;cursor:pointer;transition:var(--tr)}
+.cc:hover{transform:translateY(-6px);box-shadow:var(--shl)}
+.cc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:var(--tr)}
+.cc:hover img{transform:scale(1.06)}
+.co2{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(2,106,171,.85) 100%);z-index:1}
+.cct{position:absolute;bottom:0;left:0;right:0;padding:24px;color:white;z-index:2}
+.cct h3{font-family:var(--fd);font-size:1.15rem;font-weight:600}
+.cic{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(254,161,1,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:.9rem;z-index:2;transition:var(--tr)}
+.cc:hover .cic{background:var(--o);transform:scale(1.1)}
+
+/* PRODUCTS */
+.ps{padding:100px 0}
+.psh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px}
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.pc{background:var(--w);border-radius:var(--r);overflow:hidden;border:1px solid var(--br);transition:var(--tr);cursor:pointer}
+.pc:hover{transform:translateY(-4px);box-shadow:var(--shl);border-color:var(--b)}
+.pci{aspect-ratio:1;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pci img{width:70%;height:70%;object-fit:contain;transition:var(--tr)}
+.pc:hover .pci img{transform:scale(1.08)}
+.ptg{position:absolute;top:12px;left:12px;background:var(--o);color:white;font-size:.7rem;padding:4px 10px;border-radius:50px;font-weight:600}
+.pin{padding:20px;border-top:2px solid var(--o)}
+.pin h4{font-size:.95rem;font-weight:600;margin-bottom:4px}
+.pin p{font-size:.8rem;color:var(--tl)}
+
+/* PRODUCT DETAIL */
+.pds{padding:120px 0 80px}
+.pdg{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.pdi{background:var(--w);border-radius:24px;padding:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--br);aspect-ratio:1}
+.pdi img{max-width:80%;max-height:80%;object-fit:contain}
+.pdh{font-family:var(--fd);font-size:2.2rem;font-weight:700;margin-bottom:8px}
+.pdc{display:inline-block;background:var(--bl);color:var(--b);padding:4px 14px;border-radius:50px;font-size:.8rem;font-weight:600;margin-bottom:20px}
+.pdd{font-size:1rem;color:var(--tl);line-height:1.9;margin-bottom:28px}
+.pdf{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+.pft{background:var(--ol);color:var(--od);padding:8px 16px;border-radius:50px;font-size:.8rem;font-weight:600}
+.pda{display:flex;gap:16px;flex-wrap:wrap}
+.rs{padding:80px 0;background:var(--w)}
+.rs .st{text-align:center;margin-bottom:40px}
+
+/* CTA */
+.cts{padding:100px 0;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--b),var(--bd))}
+.cts::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23fff' fill-opacity='.03'%3E%3Cpath d='m50 50-10-10 10-10 10 10zm-30 0L10 40l10-10 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.cti{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.ctx{color:white}
+.ctx .sl{color:var(--o)}
+.ctx h2{font-family:var(--fd);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;margin-bottom:16px}
+.ctx p{font-size:1.05rem;opacity:.85;margin-bottom:36px}
+.ctimg{border-radius:24px;overflow:hidden;box-shadow:var(--shl)}
+.ctimg img{width:100%;display:block}
+
+/* CONTACT */
+.cos{padding:100px 0;background:var(--w)}
+.cog{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.cf{display:flex;flex-direction:column;gap:16px}
+.fg label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px}
+.fg input,.fg textarea{width:100%;padding:14px 18px;border:1px solid var(--br);border-radius:var(--rs);font-family:var(--fb);font-size:.95rem;transition:var(--tr);background:var(--bg)}
+.fg input:focus,.fg textarea:focus{outline:none;border-color:var(--b);box-shadow:0 0 0 3px rgba(2,106,171,.1)}
+.fg textarea{height:120px;resize:vertical}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cinfo{display:flex;flex-direction:column;gap:24px}
+.ci{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--bg);border-radius:var(--rs);border-left:3px solid var(--o)}
+.ci .ic{width:44px;height:44px;min-width:44px;background:var(--bl);color:var(--b);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.ci h4{font-size:.9rem;font-weight:600;margin-bottom:4px}
+.ci p{font-size:.85rem;color:var(--tl)}
+.soc{display:flex;gap:12px;margin-top:16px}
+.soc a{width:44px;height:44px;border-radius:12px;background:var(--b);color:white;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--tr)}
+.soc a:hover{background:var(--o);transform:translateY(-2px)}
+
+/* NEWSLETTER */
+.nls{padding:80px 0;background:var(--ol);text-align:center}
+.nls h2{font-family:var(--fd);font-size:2rem;margin-bottom:12px}
+.nls p{color:var(--tl);margin-bottom:28px}
+.nlf{display:flex;gap:12px;max-width:460px;margin:0 auto}
+.nlf input{flex:1;padding:14px 20px;border:1px solid var(--br);border-radius:50px;font-family:var(--fb);font-size:.95rem;background:var(--w)}
+.nlf input:focus{outline:none;border-color:var(--o)}
+.nlf button{padding:14px 28px;background:var(--b);color:white;border:none;border-radius:50px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:var(--fb)}
+.nlf button:hover{background:var(--bd)}
+
+/* FOOTER */
+.footer{padding:60px 0 30px;background:var(--t);color:rgba(255,255,255,.7)}
+.ftg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.ftb p{margin-top:12px;font-size:.9rem;line-height:1.7}
+.ftb img{height:50px;margin-bottom:8px}
+.footer h4{color:var(--o);font-size:.9rem;font-weight:600;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px}
+.footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer ul a{color:rgba(255,255,255,.6);font-size:.85rem;transition:var(--tr);cursor:pointer}
+.footer ul a:hover{color:var(--o)}
+.fbt{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:.8rem}
+.fbt a{color:var(--o)}
+
+/* ANIM */
+@keyframes fu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.4}}
+.fi{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.fi.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hi{grid-template-columns:1fr;text-align:center}
+  .hero>div p{margin:0 auto 36px}.hbt{justify-content:center}
+  .hv{display:none}
+  .ag,.pdg,.cti,.cog{grid-template-columns:1fr}
+  .ctimg{display:none}
+  .cg{grid-template-columns:repeat(3,1fr)}
+  .pg{grid-template-columns:repeat(3,1fr)}
+  .ftg{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nl{display:none}.mt{display:flex}
+  .cg,.pg{grid-template-columns:repeat(2,1fr)}
+  .sg{grid-template-columns:repeat(2,1fr);gap:24px}
+  .psh{flex-direction:column;align-items:flex-start;gap:16px}
+  .fr{grid-template-columns:1fr}
+  .ftg{grid-template-columns:1fr}
+  .nlf{flex-direction:column}
+  .pdg{gap:30px}
+}
+@media(max-width:480px){
+  .cg,.pg{grid-template-columns:1fr}
+  .hbt{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+<div class="container nb">
+  <div class="logo" onclick="go('home')">
+    <img src="https://static.wixstatic.com/media/c5e8c3_6469fbaf29c448e0b4bab5700f965e04~mv2.png/v1/crop/x_0,y_1,w_747,h_315/fill/w_250,h_105,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/new%20care1-01.png" alt="New Care Pharma">
+  </div>
+  <ul class="nl" id="navLinks"></ul>
+  <button class="mt" onclick="document.getElementById('mm').classList.toggle('open')"><span></span><span></span><span></span></button>
+</div>
+</nav>
+<div id="mm" class="mm"></div>
+
+<!-- PAGES -->
+<div id="page-home" class="page active"></div>
+<div id="page-about" class="page"></div>
+<div id="page-category" class="page"></div>
+<div id="page-product" class="page"></div>
+<div id="page-contact" class="page"></div>
+
+<!-- FOOTER -->
+<footer class="footer" id="footerEl"></footer>
+
+<script>
+// ═══ IMAGE BASE ═══
+const W='https://static.wixstatic.com/media/c5e8c3_';
+
+// ═══ i18n ═══
+let lang='en';
+const T={
+en:{
+  home:'Home',about:'About Us',care:'Care Products',health:'Health Products',contact:'Contact Us',
+  skincare:'Skin Care',haircare:'Hair Care',babycare:'Baby Care',teethcare:'Teeth & Mouth Care',womencare:'Women Care',
+  pharmaceutical:'Pharmaceutical',supplements:'Food Supplements',medical:'Medical Devices',
+  heroTag:'ISO 9001 & GMP Certified',
+  heroH1a:'Everything Related to',heroH1b:'Beauty',heroH1c:'Health',heroH1d:'& Skin Care',
+  heroP:'High-quality, safe and trustworthy cosmetic products and food supplements with certified manufacturing.',
+  explore:'Explore Products',contactUs:'Contact Us',readMore:'Read More',viewAll:'View All',
+  stats1:'Products',stats2:'m² Facilities',stats3:'Categories',stats4:'Certified',
+  aboutLabel:'About Us',aboutTitle:'Trusted Quality Since Day One',
+  aboutP:'We are a synonym for high-quality, safe and trustworthy cosmetic products and food supplements with an ISO 9001:2015, 22000:2005 and GMP certified manufacturing and commercialization company with halal certified (MS 1500:2012) products and 2,500 meter facilities.',
+  cert1:'ISO 9001:2015 Certified',cert1d:'International quality management standard',
+  cert2:'ISO 22000:2005 Certified',cert2d:'Food safety management system',
+  cert3:'GMP Certified Manufacturing',cert3d:'Good Manufacturing Practice compliance',
+  cert4:'Halal Certified (MS 1500:2012)',cert4d:'Halal certified products for global markets',
+  cert5:'2,500m² Facilities',cert5d:'Modern manufacturing and storage facilities',
+  catLabel:'Categories',catTitle:'Browse Our Product Lines',catP:'From skin care to medical devices, comprehensive health and beauty solutions.',
+  prodLabel:'Our Products',prodTitle:'Featured Products',
+  ctaLabel:'Get Started',ctaH:'To enjoy a good healthy life, get the right products now',ctaP:'Every part of your life relies on you having good health. Contact our distributors to find the best products.',
+  ctaBtn:'Contact Our Distributors',
+  nlH:'Be Part of Something Beautiful',nlP:'Subscribe for updates on new products and health tips.',nlPlc:'Enter your email here',nlBtn:'Subscribe',nlThanks:'Thanks for subscribing!',
+  allProducts:'All Products',allDesc:'Browse our complete product catalog.',
+  noProducts:'No products in this category yet.',
+  contactLabel:'Contact Us',contactTitle:'Get In Touch',contactP:'Have questions about our products? We\'d love to hear from you.',
+  fname:'First Name',lname:'Last Name',email:'Email',subject:'Subject',message:'Message',send:'Send Message',
+  phFname:'Your first name',phLname:'Your last name',phEmail:'you@example.com',phSubject:'How can we help?',phMsg:'Your message...',
+  emailUs:'Email Us',whatsapp:'WhatsApp',location:'Location',locVal:'Bosnia & Herzegovina',
+  contactPricing:'Contact Us for Pricing',backCat:'Back to Category',relatedProducts:'Related Products',
+  since:'Since 2020',certBadge:'ISO & GMP Certified',
+  aboutPageP:'Learn more about New Care Pharma and our commitment to quality and safety.',
+  aboutPageLabel:'Who We Are',aboutPageTitle:'High-Quality Health & Beauty Products',
+  contactPageP:'Have questions about our products? We\'d love to hear from you.',
+  formSent:'Thank you! Your message has been sent.',
+  footerP:'High-quality, safe and trustworthy cosmetic products and food supplements.',
+  depts:'Departments',rights:'All Rights Reserved',powered:'Powered by',
+  browseP:'Browse our products in this category.',
+},
+bs:{
+  home:'Početna',about:'O nama',care:'Proizvodi za njegu',health:'Zdravstveni proizvodi',contact:'Kontaktirajte nas',
+  skincare:'Njega kože',haircare:'Njega kose',babycare:'Njega beba',teethcare:'Njega zubi i usta',womencare:'Ženska njega',
+  pharmaceutical:'Farmaceutski',supplements:'Dodaci prehrani',medical:'Medicinski uređaji',
+  heroTag:'ISO 9001 & GMP Certifikat',
+  heroH1a:'Sve vezano za',heroH1b:'Ljepotu',heroH1c:'Zdravlje',heroH1d:'i njegu kože',
+  heroP:'Visokokvalitetni, sigurni i pouzdani kozmetički proizvodi i dodaci prehrani sa certificiranom proizvodnjom.',
+  explore:'Istražite proizvode',contactUs:'Kontaktirajte nas',readMore:'Pročitajte više',viewAll:'Pogledajte sve',
+  stats1:'Proizvoda',stats2:'m² Objekata',stats3:'Kategorija',stats4:'Certifikat',
+  aboutLabel:'O nama',aboutTitle:'Pouzdani kvalitet od prvog dana',
+  aboutP:'Mi smo sinonim za visokokvalitetne, sigurne i pouzdane kozmetičke proizvode i dodatke prehrani sa ISO 9001:2015, 22000:2005 i GMP certificiranom proizvodnjom i kompanijom za komercijalizaciju sa halal certificiranim (MS 1500:2012) proizvodima i objektima od 2.500 metara.',
+  cert1:'ISO 9001:2015 Certifikat',cert1d:'Međunarodni standard upravljanja kvalitetom',
+  cert2:'ISO 22000:2005 Certifikat',cert2d:'Sistem upravljanja sigurnošću hrane',
+  cert3:'GMP Certificirana proizvodnja',cert3d:'Usklađenost sa Dobrom proizvođačkom praksom',
+  cert4:'Halal certifikat (MS 1500:2012)',cert4d:'Halal certificirani proizvodi za globalna tržišta',
+  cert5:'2.500m² Objekti',cert5d:'Moderni proizvodni i skladišni objekti',
+  catLabel:'Kategorije',catTitle:'Pregledajte naše linije proizvoda',catP:'Od njege kože do medicinskih uređaja, sveobuhvatna rješenja za zdravlje i ljepotu.',
+  prodLabel:'Naši proizvodi',prodTitle:'Istaknuti proizvodi',
+  ctaLabel:'Započnite',ctaH:'Za zdrav i lijep život, pronađite prave proizvode sada',ctaP:'Svaki dio vašeg života ovisi o dobrom zdravlju. Kontaktirajte naše distributere za najbolje proizvode.',
+  ctaBtn:'Kontaktirajte naše distributere',
+  nlH:'Budite dio nečeg lijepog',nlP:'Pretplatite se za novosti o novim proizvodima i zdravstvene savjete.',nlPlc:'Unesite vaš email ovdje',nlBtn:'Pretplatite se',nlThanks:'Hvala na pretplati!',
+  allProducts:'Svi proizvodi',allDesc:'Pregledajte naš kompletan katalog proizvoda.',
+  noProducts:'Trenutno nema proizvoda u ovoj kategoriji.',
+  contactLabel:'Kontaktirajte nas',contactTitle:'Stupite u kontakt',contactP:'Imate pitanja o našim proizvodima? Rado ćemo vam pomoći.',
+  fname:'Ime',lname:'Prezime',email:'Email',subject:'Predmet',message:'Poruka',send:'Pošaljite poruku',
+  phFname:'Vaše ime',phLname:'Vaše prezime',phEmail:'vi@primjer.com',phSubject:'Kako vam možemo pomoći?',phMsg:'Vaša poruka...',
+  emailUs:'Pišite nam',whatsapp:'WhatsApp',location:'Lokacija',locVal:'Bosna i Hercegovina',
+  contactPricing:'Kontaktirajte nas za cijene',backCat:'Nazad na kategoriju',relatedProducts:'Srodni proizvodi',
+  since:'Od 2020.',certBadge:'ISO & GMP Certifikat',
+  aboutPageP:'Saznajte više o New Care Pharma i našoj posvećenosti kvalitetu i sigurnosti.',
+  aboutPageLabel:'Ko smo mi',aboutPageTitle:'Visokokvalitetni zdravstveni i kozmetički proizvodi',
+  contactPageP:'Imate pitanja o našim proizvodima? Rado ćemo vam pomoći.',
+  formSent:'Hvala! Vaša poruka je poslana.',
+  footerP:'Visokokvalitetni, sigurni i pouzdani kozmetički proizvodi i dodaci prehrani.',
+  depts:'Odjeli',rights:'Sva prava zadržana',powered:'Pokreće',
+  browseP:'Pregledajte naše proizvode u ovoj kategoriji.',
+}
+};
+const t=k=>T[lang][k]||k;
+
+// ═══ DATA ═══
+const cats=[
+  {id:'haircare',img:W+'fc5031fcd1934d419631fea81960ac38~mv2.jpg/v1/fill/w_400,h_530,q_87,enc_avif,quality_auto/c5e8c3_fc5031fcd1934d419631fea81960ac38~mv2.jpg'},
+  {id:'skincare',img:W+'84fddaf8a48d4c82895fe8388e60db14~mv2.jpg/v1/fill/w_400,h_530,q_87,enc_avif,quality_auto/c5e8c3_84fddaf8a48d4c82895fe8388e60db14~mv2.jpg'},
+  {id:'pharmaceutical',img:W+'f66f7b63e370424fae33d77d545dfdc3~mv2.jpg/v1/fill/w_400,h_530,q_87,enc_avif,quality_auto/c5e8c3_f66f7b63e370424fae33d77d545dfdc3~mv2.jpg'},
+  {id:'supplements',img:W+'4afcf85e19e149caa23be1722adb7d29~mv2.jpg/v1/fill/w_400,h_530,q_87,enc_avif,quality_auto/c5e8c3_4afcf85e19e149caa23be1722adb7d29~mv2.jpg'},
+  {id:'teethcare',img:W+'81643794994f4415b1beb759e6f7333a~mv2.jpg/v1/fill/w_400,h_530,q_87,enc_avif,quality_auto/c5e8c3_81643794994f4415b1beb759e6f7333a~mv2.jpg'},
+  {id:'medical',img:W+'16af4cfeef4e4709abe45a53d1b9603b~mv2.jpg/v1/fill/w_400,h_530,q_87,enc_avif,quality_auto/c5e8c3_16af4cfeef4e4709abe45a53d1b9603b~mv2.jpg'},
+  {id:'womencare',img:W+'842b032d50564553ab29a96d6e65e68c~mv2.jpg/v1/fill/w_400,h_530,fp_0.47_0.5,q_87,enc_avif,quality_auto/c5e8c3_842b032d50564553ab29a96d6e65e68c~mv2.jpg'},
+  {id:'babycare',img:W+'97501940f02e4858a1c93e50d799dfc3~mv2.jpg/v1/fill/w_400,h_530,q_87,enc_avif,quality_auto/c5e8c3_97501940f02e4858a1c93e50d799dfc3~mv2.jpg'}
+];
+const prods=[
+  {id:'omega3',cat:'supplements',tag:'Popular',tgBs:'Popularno',img:W+'cc1781c39f4e4cebaa78bba8853f279f~mv2.png/v1/fill/w_400,h_432,al_c,q_85,enc_avif,quality_auto/c5e8c3_cc1781c39f4e4cebaa78bba8853f279f~mv2.png',
+   n:{en:'Capsules Omega 3',bs:'Kapsule Omega 3'},
+   d:{en:'Ultra Vit Essential Nutrition Omega 3 (1000mg) Softgel Capsules for daily use. 30 softgel capsules per pack. A perfect formulation for mental and physical health with age-defying benefits and cardiovascular health support. 100% Natural, Vegan, and Safe Ingredients.',
+      bs:'Ultra Vit Essential Nutrition Omega 3 (1000mg) meke kapsule za svakodnevnu upotrebu. 30 mekih kapsula po pakovanju. Savršena formulacija za mentalno i fizičko zdravlje sa anti-aging benefitima i podrškom kardiovaskularnom zdravlju. 100% prirodni, veganski i sigurni sastojci.'},
+   f:{en:['1000mg per capsule','30 capsules/pack','Cardiovascular health','100% Natural','Vegan & Safe'],
+      bs:['1000mg po kapsuli','30 kapsula/pakovanje','Kardiovaskularno zdravlje','100% Prirodno','Vegansko i sigurno']}},
+  {id:'aqua-omega-or',cat:'supplements',img:W+'f3c7b526b81e4796a3efa8edf9b1aa99~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_f3c7b526b81e4796a3efa8edf9b1aa99~mv2.png',
+   n:{en:'Aqua Omega 3 Orange',bs:'Aqua Omega 3 Narandža'},
+   d:{en:'Delicious orange-flavored liquid Omega 3 supplement. Easy to take, perfect for those who prefer liquid over capsules. Rich in EPA and DHA essential fatty acids.',
+      bs:'Ukusan tečni Omega 3 dodatak sa ukusom narandže. Lak za uzimanje, savršen za one koji preferiraju tečnost umjesto kapsula. Bogat EPA i DHA esencijalnim masnim kiselinama.'},
+   f:{en:['Orange flavored','Liquid form','EPA & DHA','Easy absorption'],bs:['Ukus narandže','Tečni oblik','EPA & DHA','Laka apsorpcija']}},
+  {id:'aqua-omega',cat:'supplements',img:W+'37c379d194a54f91b6afa9ceaf7da03b~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_37c379d194a54f91b6afa9ceaf7da03b~mv2.png',
+   n:{en:'AQUA Omega',bs:'AQUA Omega'},
+   d:{en:'Premium liquid Omega 3 supplement for daily nutritional support. Supports heart, brain, and joint health with high-quality fish oil.',
+      bs:'Premium tečni Omega 3 dodatak za svakodnevnu nutritivnu podršku. Podržava zdravlje srca, mozga i zglobova sa visokokvalitetnim ribljim uljem.'},
+   f:{en:['Liquid formula','Heart health','Brain support','Joint care'],bs:['Tečna formula','Zdravlje srca','Podrška mozgu','Njega zglobova']}},
+  {id:'baby-gas',cat:'babycare',img:W+'8e15de36af1d4ecb8163b08f80ba44d9~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_8e15de36af1d4ecb8163b08f80ba44d9~mv2.png',
+   n:{en:'Baby Gas Relieve',bs:'Baby Gas Relieve'},
+   d:{en:'Gentle and effective gas relief drops for babies. Helps relieve discomfort from gas, colic, and bloating. Safe and natural ingredients suitable for newborns.',
+      bs:'Nježne i efikasne kapi za olakšanje gasova kod beba. Pomažu u ublažavanju nelagode od gasova, kolika i nadutosti. Sigurni i prirodni sastojci pogodni za novorođenčad.'},
+   f:{en:['For babies','Gas & colic relief','Natural ingredients','Safe for newborns'],bs:['Za bebe','Olakšanje gasova i kolika','Prirodni sastojci','Sigurno za novorođenčad']}},
+  {id:'baby-vitc',cat:'babycare',tag:'New',tgBs:'Novo',img:W+'d71933feecbe49e5b711f94d4250d143~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_d71933feecbe49e5b711f94d4250d143~mv2.png',
+   n:{en:'Baby Vitamin C Drops',bs:'Baby Vitamin C Kapi'},
+   d:{en:'Essential Vitamin C drops for babies and toddlers. Supports immune system development and overall growth. Easy-to-administer dropper bottle.',
+      bs:'Esencijalne Vitamin C kapi za bebe i malu djecu. Podržavaju razvoj imunološkog sistema i cjelokupni rast. Bočica sa kapaljkom za jednostavnu primjenu.'},
+   f:{en:['Vitamin C','Immune support','For babies','Easy dropper'],bs:['Vitamin C','Imunološka podrška','Za bebe','Jednostavna kapaljka']}},
+  {id:'baby-vitd3',cat:'babycare',img:W+'9efe992b033e4b81859bba255e9275cb~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_9efe992b033e4b81859bba255e9275cb~mv2.png',
+   n:{en:'Baby Vitamin D3 Drops',bs:'Baby Vitamin D3 Kapi'},
+   d:{en:'Vitamin D3 drops formulated specifically for infants and babies. Essential for healthy bone development and calcium absorption.',
+      bs:'Vitamin D3 kapi formulirane posebno za dojenčad i bebe. Esencijalne za zdrav razvoj kostiju i apsorpciju kalcija.'},
+   f:{en:['Vitamin D3','Bone health','Calcium absorption','For infants'],bs:['Vitamin D3','Zdravlje kostiju','Apsorpcija kalcija','Za dojenčad']}},
+  {id:'capsules-d3',cat:'supplements',img:W+'f138636a01c248f0abe383ec7358bf12~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_f138636a01c248f0abe383ec7358bf12~mv2.png',
+   n:{en:'Capsules D3',bs:'Kapsule D3'},
+   d:{en:'High-potency Vitamin D3 softgel capsules for adults. Supports bone health, immune function, and mood regulation.',
+      bs:'Visoko potentne Vitamin D3 meke kapsule za odrasle. Podržavaju zdravlje kostiju, imunološku funkciju i regulaciju raspoloženja.'},
+   f:{en:['Vitamin D3','Bone health','Immune support','Softgel capsules'],bs:['Vitamin D3','Zdravlje kostiju','Imunološka podrška','Meke kapsule']}},
+  {id:'big-hunger',cat:'supplements',img:W+'3666a0ebd93e497db60b8ecf5984c566~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_3666a0ebd93e497db60b8ecf5984c566~mv2.png',
+   n:{en:'Big Hunger',bs:'Big Hunger'},
+   d:{en:'Appetite stimulant supplement designed to support healthy weight gain and nutritional intake. Ideal for those needing appetite support.',
+      bs:'Dodatak za stimulaciju apetita dizajniran za podršku zdravom dobijanju na težini i nutritivnom unosu. Idealan za one kojima je potrebna podrška apetitu.'},
+   f:{en:['Appetite support','Weight gain','Nutritional','Natural formula'],bs:['Podrška apetitu','Dobijanje na težini','Nutritivno','Prirodna formula']}},
+  {id:'capsules-zn',cat:'supplements',img:W+'a5258421f886465fae4e01068e1c3e8a~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_a5258421f886465fae4e01068e1c3e8a~mv2.png',
+   n:{en:'Capsules Zinc',bs:'Kapsule Cink'},
+   d:{en:'Essential Zinc capsules for immune system support. Helps with skin health, wound healing, and overall immune function.',
+      bs:'Esencijalne kapsule cinka za podršku imunološkom sistemu. Pomažu kod zdravlja kože, zarastanja rana i ukupne imunološke funkcije.'},
+   f:{en:['Zinc supplement','Immune support','Skin health','Wound healing'],bs:['Dodatak cinka','Imunološka podrška','Zdravlje kože','Zarastanje rana']}},
+  {id:'gripe-water',cat:'babycare',img:W+'d9e792184d4841a7b41f7ebd7545f401~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_d9e792184d4841a7b41f7ebd7545f401~mv2.png',
+   n:{en:'Gripe Water Night Time',bs:'Gripe Water za noć'},
+   d:{en:'Night time gripe water formula for babies. Helps soothe colic, gas, and discomfort to promote restful sleep for both baby and parents.',
+      bs:'Noćna gripe water formula za bebe. Pomaže u smirivanju kolika, gasova i nelagode za promociju mirnog sna za bebu i roditelje.'},
+   f:{en:['Night formula','Colic relief','Promotes sleep','150ml bottle'],bs:['Noćna formula','Olakšanje kolika','Promoviše san','150ml bočica']}},
+  {id:'herbal-drops',cat:'pharmaceutical',img:W+'7967ae5dbb68483c9514fbe2001bb154~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_7967ae5dbb68483c9514fbe2001bb154~mv2.png',
+   n:{en:'Herbal Ivy Drops',bs:'Biljne kapi bršljana'},
+   d:{en:'Natural herbal ivy leaf extract drops for respiratory support. Helps relieve cough and supports healthy respiratory function.',
+      bs:'Prirodne biljne kapi ekstrakta lista bršljana za respiratornu podršku. Pomažu u ublažavanju kašlja i podržavaju zdravu respiratornu funkciju.'},
+   f:{en:['Herbal formula','Ivy extract','Respiratory support','Natural'],bs:['Biljna formula','Ekstrakt bršljana','Respiratorna podrška','Prirodno']}},
+  {id:'minoxidil',cat:'haircare',img:W+'ccedc2bf0298478e8c7f84f7e99dab5c~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_ccedc2bf0298478e8c7f84f7e99dab5c~mv2.png',
+   n:{en:'Minoxidil',bs:'Minoxidil'},
+   d:{en:'Topical Minoxidil solution for hair regrowth. Clinically proven formula to help stimulate hair follicles and promote new hair growth.',
+      bs:'Topikalno Minoxidil rješenje za ponovni rast kose. Klinički dokazana formula za stimulaciju folikula kose i promociju novog rasta kose.'},
+   f:{en:['Hair regrowth','Clinically proven','Topical solution','For men & women'],bs:['Ponovni rast kose','Klinički dokazano','Topikalno rješenje','Za muškarce i žene']}},
+  {id:'kids-control',cat:'haircare',img:W+'1e7512e90a02456c924f7560788580c8~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_1e7512e90a02456c924f7560788580c8~mv2.png',
+   n:{en:'Kids Control Anti Lice Spray',bs:'Kids Control Sprej protiv ušiju'},
+   d:{en:'Effective anti-lice spray for children. Safe, gentle formula that eliminates lice while being kind to your child\'s scalp.',
+      bs:'Efikasan sprej protiv ušiju za djecu. Siguran, nježan formula koji eliminira uši dok je blag prema koži glave vašeg djeteta.'},
+   f:{en:['Anti-lice','Safe for kids','Gentle formula','Easy spray'],bs:['Protiv ušiju','Sigurno za djecu','Nježna formula','Jednostavan sprej']}},
+  {id:'multi-blue',cat:'supplements',tag:'New',tgBs:'Novo',img:W+'4a64fd9ad05c4d619b0c48081e95afe4~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_4a64fd9ad05c4d619b0c48081e95afe4~mv2.png',
+   n:{en:'Multi Vitamin Blueberry',bs:'Multi Vitamin Borovnica'},
+   d:{en:'Delicious blueberry-flavored multivitamin supplement. Complete daily nutrition with essential vitamins and minerals in a great-tasting formula.',
+      bs:'Ukusan multivitaminski dodatak sa ukusom borovnice. Kompletna dnevna ishrana sa esencijalnim vitaminima i mineralima u formuli sjajnog ukusa.'},
+   f:{en:['Blueberry flavor','Multi vitamin','Daily nutrition','Great taste'],bs:['Ukus borovnice','Multi vitamin','Dnevna ishrana','Sjajan ukus']}},
+  {id:'multi-or',cat:'supplements',img:W+'759b6ecf0ea54948b89e291afdc5b4c7~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_759b6ecf0ea54948b89e291afdc5b4c7~mv2.png',
+   n:{en:'Multi Vitamin Orange',bs:'Multi Vitamin Narandža'},
+   d:{en:'Orange-flavored multivitamin for the whole family. Packed with essential vitamins and minerals to support daily health and vitality.',
+      bs:'Multivitamin sa ukusom narandže za cijelu porodicu. Bogat esencijalnim vitaminima i mineralima za podršku dnevnom zdravlju i vitalnosti.'},
+   f:{en:['Orange flavor','Multi vitamin','Family friendly','Daily health'],bs:['Ukus narandže','Multi vitamin','Za cijelu porodicu','Dnevno zdravlje']}},
+  {id:'prospa',cat:'pharmaceutical',img:W+'b119c1672ec1449f9ebcc571574ee415~mv2.png/v1/fill/w_400,h_336,al_c,q_85,enc_avif,quality_auto/c5e8c3_b119c1672ec1449f9ebcc571574ee415~mv2.png',
+   n:{en:'Prospa',bs:'Prospa'},
+   d:{en:'Prospa pharmaceutical product for specialized health support. Formulated with carefully selected active ingredients for targeted therapeutic benefits.',
+      bs:'Prospa farmaceutski proizvod za specijaliziranu zdravstvenu podršku. Formuliran sa pažljivo odabranim aktivnim sastojcima za ciljane terapeutske benefite.'},
+   f:{en:['Pharmaceutical grade','Targeted therapy','Quality ingredients','Certified'],bs:['Farmaceutski kvalitet','Ciljana terapija','Kvalitetni sastojci','Certificirano']}}
+];
+
+const cn=id=>t(id);
+const pn=p=>p.n[lang];
+const pd=p=>p.d[lang];
+const pf=p=>p.f[lang];
+const ptag=p=>p.tag?(lang==='bs'?(p.tgBs||p.tag):p.tag):null;
+
+// ═══ RENDER HELPERS ═══
+function catCard(c){return `<div class="cc fi" onclick="go('cat','${c.id}')"><img src="${c.img}" alt="${cn(c.id)}"><div class="co2"></div><div class="cic">→</div><div class="cct"><h3>${cn(c.id)}</h3></div></div>`}
+function prodCard(p){const tg=ptag(p);return `<div class="pc fi" onclick="go('product','${p.id}')"><div class="pci"><img src="${p.img}" alt="${pn(p)}">${tg?`<span class="ptg">${tg}</span>`:''}</div><div class="pin"><h4>${pn(p)}</h4><p>${cn(p.cat)}</p></div></div>`}
+
+// ═══ RENDER PAGES ═══
+function renderAll(){
+  renderNav();renderHome();renderAbout();renderContact();renderFooter();
+  // re-render current page if category/product
+  if(curPage==='cat')go('cat',curParam);
+  if(curPage==='product')go('product',curParam);
+}
+function renderNav(){
+  document.getElementById('navLinks').innerHTML=`
+    <li><a onclick="go('home')">${t('home')}</a></li>
+    <li><a onclick="go('about')">${t('about')}</a></li>
+    <li class="dd"><span>${t('care')} ▾</span><div class="dm">
+      <a onclick="go('cat','skincare')">${t('skincare')}</a>
+      <a onclick="go('cat','haircare')">${t('haircare')}</a>
+      <a onclick="go('cat','babycare')">${t('babycare')}</a>
+      <a onclick="go('cat','teethcare')">${t('teethcare')}</a>
+      <a onclick="go('cat','womencare')">${t('womencare')}</a>
+    </div></li>
+    <li class="dd"><span>${t('health')} ▾</span><div class="dm">
+      <a onclick="go('cat','pharmaceutical')">${t('pharmaceutical')}</a>
+      <a onclick="go('cat','supplements')">${t('supplements')}</a>
+      <a onclick="go('cat','medical')">${t('medical')}</a>
+    </div></li>
+    <li><a onclick="go('contact')" class="ncta">${t('contact')}</a></li>
+    <li><div class="lang-sw">
+      <button class="lang-btn ${lang==='en'?'active':''}" onclick="setLang('en')">EN</button>
+      <button class="lang-btn ${lang==='bs'?'active':''}" onclick="setLang('bs')">BS</button>
+    </div></li>`;
+  document.getElementById('mm').innerHTML=`
+    <a onclick="go('home');closeMob()">${t('home')}</a>
+    <a onclick="go('about');closeMob()">${t('about')}</a>
+    <a onclick="go('cat','skincare');closeMob()">${t('skincare')}</a>
+    <a onclick="go('cat','haircare');closeMob()">${t('haircare')}</a>
+    <a onclick="go('cat','babycare');closeMob()">${t('babycare')}</a>
+    <a onclick="go('cat','teethcare');closeMob()">${t('teethcare')}</a>
+    <a onclick="go('cat','womencare');closeMob()">${t('womencare')}</a>
+    <a onclick="go('cat','pharmaceutical');closeMob()">${t('pharmaceutical')}</a>
+    <a onclick="go('cat','supplements');closeMob()">${t('supplements')}</a>
+    <a onclick="go('cat','medical');closeMob()">${t('medical')}</a>
+    <a onclick="go('contact');closeMob()">${t('contact')}</a>
+    <div class="lang-sw">
+      <button class="lang-btn ${lang==='en'?'active':''}" onclick="setLang('en');closeMob()">EN</button>
+      <button class="lang-btn ${lang==='bs'?'active':''}" onclick="setLang('bs');closeMob()">BS</button>
+    </div>`;
+}
+function renderHome(){
+  document.getElementById('page-home').innerHTML=`
+  <section class="hero"><div class="container hi">
+    <div class="hc">
+      <div class="hbg"><span class="dot"></span>${t('heroTag')}</div>
+      <h1>${t('heroH1a')}<br><span class="cb">${t('heroH1b')}</span>, <span class="co">${t('heroH1c')}</span><br>${t('heroH1d')}</h1>
+      <p>${t('heroP')}</p>
+      <div class="hbt"><a class="bp" onclick="go('cat','supplements')">${t('explore')} →</a><a class="bo" onclick="go('contact')">${t('contactUs')}</a></div>
+    </div>
+    <div class="hv"><div class="hiw"><img src="${W}f52a442e38f347c48750ef298f921361~mv2.jpg/v1/fill/w_500,h_666,al_c,q_80,enc_avif,quality_auto/c5e8c3_f52a442e38f347c48750ef298f921361~mv2.jpg" alt="Products"></div>
+      <div class="hf f1"><div class="fla">${t('stats1')}</div><div class="fv o">50+</div></div>
+      <div class="hf f2"><div class="fla">${t('stats2')}</div><div class="fv">2,500</div></div>
+    </div>
+  </div></section>
+  <section class="sts"><div class="container"><div class="sg">
+    <div class="si fi"><h3>50+</h3><p>${t('stats1')}</p></div>
+    <div class="si fi"><h3>2,500</h3><p>${t('stats2')}</p></div>
+    <div class="si fi"><h3>8</h3><p>${t('stats3')}</p></div>
+    <div class="si fi"><h3>ISO</h3><p>${t('stats4')}</p></div>
+  </div></div></section>
+  <section class="abs"><div class="container"><div class="ag">
+    <div class="ai fi"><img src="${W}712e22c620eb41d08ba058c11ddd54ce~mv2.jpg/v1/fill/w_600,h_400,al_c,q_80,enc_avif,quality_auto/532.jpg" alt="About"><div class="abg">${t('since')}</div></div>
+    <div class="fi"><div class="sl">${t('aboutLabel')}</div><h2 class="st">${t('aboutTitle')}</h2><p class="sd">${t('aboutP')}</p>
+      <div style="margin-top:28px"><a class="bs" onclick="go('about')">${t('readMore')} →</a></div>
+    </div>
+  </div></div></section>
+  <section class="cs"><div class="container">
+    <div class="ch fi"><div class="sl">${t('catLabel')}</div><h2 class="st">${t('catTitle')}</h2><p class="sd">${t('catP')}</p></div>
+    <div class="cg">${cats.map(catCard).join('')}</div>
+  </div></section>
+  <section class="ps"><div class="container">
+    <div class="psh fi"><div><div class="sl">${t('prodLabel')}</div><h2 class="st">${t('prodTitle')}</h2></div>
+      <a class="bs" onclick="go('cat','all')">${t('viewAll')} →</a></div>
+    <div class="pg">${prods.slice(0,8).map(prodCard).join('')}</div>
+  </div></section>
+  <section class="cts"><div class="container"><div class="cti fi">
+    <div class="ctx"><div class="sl">${t('ctaLabel')}</div><h2>${t('ctaH')}</h2><p>${t('ctaP')}</p>
+      <a class="bo" onclick="go('contact')">${t('ctaBtn')} →</a></div>
+    <div class="ctimg"><img src="${W}e0cb91ebda7d4bbc8b5eeb3de34ab525~mv2.jpg/v1/fill/w_500,h_420,al_c,q_80,enc_avif,quality_auto/c5e8c3_e0cb91ebda7d4bbc8b5eeb3de34ab525~mv2.jpg" alt="Doctor"></div>
+  </div></div></section>
+  <section class="nls"><div class="container fi"><h2>${t('nlH')}</h2><p>${t('nlP')}</p>
+    <div class="nlf"><input type="email" placeholder="${t('nlPlc')}"><button onclick="alert('${t('nlThanks')}')">${t('nlBtn')}</button></div>
+  </div></section>`;
+}
+function renderAbout(){
+  document.getElementById('page-about').innerHTML=`
+  <div class="ph phb"><div class="container"><div class="bc"><a onclick="go('home')">${t('home')}</a> / ${t('about')}</div>
+    <h1>${t('about')}</h1><p>${t('aboutPageP')}</p></div></div>
+  <section class="abs"><div class="container"><div class="ag">
+    <div class="ai fi"><img src="${W}712e22c620eb41d08ba058c11ddd54ce~mv2.jpg/v1/fill/w_600,h_400,al_c,q_80,enc_avif,quality_auto/532.jpg" alt="About"><div class="abg">${t('certBadge')}</div></div>
+    <div class="fi"><div class="sl">${t('aboutPageLabel')}</div><h2 class="st">${t('aboutPageTitle')}</h2><p class="sd">${t('aboutP')}</p>
+      <div class="afs">
+        <div class="af"><div class="ic">✓</div><div><h4>${t('cert1')}</h4><p>${t('cert1d')}</p></div></div>
+        <div class="af"><div class="ic">✓</div><div><h4>${t('cert2')}</h4><p>${t('cert2d')}</p></div></div>
+        <div class="af"><div class="ic">✓</div><div><h4>${t('cert3')}</h4><p>${t('cert3d')}</p></div></div>
+        <div class="af"><div class="ic">✓</div><div><h4>${t('cert4')}</h4><p>${t('cert4d')}</p></div></div>
+        <div class="af"><div class="ic">✓</div><div><h4>${t('cert5')}</h4><p>${t('cert5d')}</p></div></div>
+      </div>
+    </div>
+  </div></div></section>`;
+}
+function renderContact(){
+  document.getElementById('page-contact').innerHTML=`
+  <div class="ph pho"><div class="container"><div class="bc"><a onclick="go('home')">${t('home')}</a> / ${t('contact')}</div>
+    <h1>${t('contactLabel')}</h1><p>${t('contactPageP')}</p></div></div>
+  <section class="cos"><div class="container">
+    <div style="text-align:center;margin-bottom:48px" class="fi"><div class="sl">${t('contactLabel')}</div><h2 class="st">${t('contactTitle')}</h2><p class="sd" style="margin:0 auto">${t('contactP')}</p></div>
+    <div class="cog">
+      <form class="cf fi" onsubmit="event.preventDefault();alert('${t('formSent')}')">
+        <div class="fr"><div class="fg"><label>${t('fname')}</label><input type="text" placeholder="${t('phFname')}" required></div>
+          <div class="fg"><label>${t('lname')}</label><input type="text" placeholder="${t('phLname')}"></div></div>
+        <div class="fg"><label>${t('email')}</label><input type="email" placeholder="${t('phEmail')}" required></div>
+        <div class="fg"><label>${t('subject')}</label><input type="text" placeholder="${t('phSubject')}"></div>
+        <div class="fg"><label>${t('message')}</label><textarea placeholder="${t('phMsg')}"></textarea></div>
+        <button type="submit" class="bo" style="width:100%;justify-content:center;border:none">${t('send')} →</button>
+      </form>
+      <div class="cinfo fi">
+        <div class="ci"><div class="ic">✉</div><div><h4>${t('emailUs')}</h4><p>info@newcarepharma.ba</p></div></div>
+        <div class="ci"><div class="ic">📱</div><div><h4>${t('whatsapp')}</h4><p>+387 60 338 2244</p></div></div>
+        <div class="ci"><div class="ic">📍</div><div><h4>${t('location')}</h4><p>${t('locVal')}</p></div></div>
+        <div class="soc"><a href="https://www.instagram.com/" target="_blank">📷</a><a href="https://m.facebook.com/New-CARE-pharma-100590879346463/" target="_blank">f</a><a href="https://wa.me/387603382244" target="_blank">💬</a></div>
+      </div>
+    </div>
+  </div></section>`;
+}
+function renderFooter(){
+  document.getElementById('footerEl').innerHTML=`<div class="container">
+    <div class="ftg">
+      <div class="ftb"><img src="${W}d73ed1d153e14b0fbd5042d625ac8127~mv2.png/v1/crop/x_0,y_0,w_749,h_317/fill/w_250,h_106,al_c,q_85,enc_avif,quality_auto/new%20care1-01%20(2)_edited.png" alt="New Care Pharma"><p>${t('footerP')}</p></div>
+      <div><h4>${t('depts')}</h4><ul>
+        <li><a onclick="go('home')">${t('home')}</a></li>
+        <li><a onclick="go('about')">${t('about')}</a></li>
+        <li><a onclick="go('cat','all')">${t('allProducts')}</a></li>
+        <li><a onclick="go('contact')">${t('contact')}</a></li>
+      </ul></div>
+      <div><h4>${t('care')}</h4><ul>
+        <li><a onclick="go('cat','skincare')">${t('skincare')}</a></li>
+        <li><a onclick="go('cat','haircare')">${t('haircare')}</a></li>
+        <li><a onclick="go('cat','teethcare')">${t('teethcare')}</a></li>
+        <li><a onclick="go('cat','womencare')">${t('womencare')}</a></li>
+        <li><a onclick="go('cat','babycare')">${t('babycare')}</a></li>
+      </ul></div>
+      <div><h4>${t('health')}</h4><ul>
+        <li><a onclick="go('cat','medical')">${t('medical')}</a></li>
+        <li><a onclick="go('cat','pharmaceutical')">${t('pharmaceutical')}</a></li>
+        <li><a onclick="go('cat','supplements')">${t('supplements')}</a></li>
+      </ul></div>
+    </div>
+    <div class="fbt"><p>New Care Pharma © 2024 | ${t('rights')}</p><p>${t('powered')} <a href="#">Nexo Ajans</a></p></div>
+  </div>`;
+}
+
+// ═══ ROUTING ═══
+let curPage='home',curParam='';
+function go(page,param){
+  curPage=page;curParam=param||'';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  window.scrollTo({top:0,behavior:'instant'});
+  if(page==='home'){
+    document.getElementById('page-home').classList.add('active');
+    document.title='New Care Pharma';
+  } else if(page==='about'){
+    document.getElementById('page-about').classList.add('active');
+    document.title=t('about')+' | New Care Pharma';
+  } else if(page==='contact'){
+    document.getElementById('page-contact').classList.add('active');
+    document.title=t('contact')+' | New Care Pharma';
+  } else if(page==='cat'){
+    document.getElementById('page-category').classList.add('active');
+    const isAll=param==='all';
+    const title=isAll?t('allProducts'):cn(param);
+    const desc=isAll?t('allDesc'):t('browseP');
+    const filtered=isAll?prods:prods.filter(p=>p.cat===param);
+    document.getElementById('page-category').innerHTML=`
+      <div class="ph phb"><div class="container"><div class="bc"><a onclick="go('home')">${t('home')}</a> / ${title}</div>
+        <h1>${title}</h1><p>${desc}</p></div></div>
+      <section class="ps"><div class="container">
+        ${filtered.length?`<div class="pg">${filtered.map(prodCard).join('')}</div>`
+          :`<div style="text-align:center;padding:60px 0"><p style="font-size:1.2rem;color:var(--tl);margin-bottom:24px">${t('noProducts')}</p><a class="bp" onclick="go('cat','all')">${t('viewAll')}</a></div>`}
+      </div></section>`;
+    document.title=title+' | New Care Pharma';
+  } else if(page==='product'){
+    document.getElementById('page-product').classList.add('active');
+    const p=prods.find(x=>x.id===param);if(!p)return;
+    const related=prods.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,4);
+    document.getElementById('page-product').innerHTML=`
+      <section class="pds"><div class="container">
+        <div class="bc" style="margin-bottom:24px;font-size:.85rem;color:var(--tl)">
+          <a onclick="go('home')" style="color:var(--b);cursor:pointer">${t('home')}</a> /
+          <a onclick="go('cat','${p.cat}')" style="color:var(--b);cursor:pointer">${cn(p.cat)}</a> /
+          <span>${pn(p)}</span></div>
+        <div class="pdg">
+          <div class="pdi fi"><img src="${p.img}" alt="${pn(p)}"></div>
+          <div class="fi"><h1 class="pdh">${pn(p)}</h1>
+            <span class="pdc">${cn(p.cat)}</span>
+            <div class="pdd"><p>${pd(p)}</p></div>
+            <div class="pdf">${pf(p).map(f=>`<span class="pft">${f}</span>`).join('')}</div>
+            <div class="pda"><a class="bo" onclick="go('contact')">${t('contactPricing')} →</a>
+              <a class="bs" onclick="go('cat','${p.cat}')">← ${t('backCat')}</a></div>
+          </div>
+        </div>
+      </div></section>
+      ${related.length?`<section class="rs"><div class="container"><h2 class="st">${t('relatedProducts')}</h2><div class="pg">${related.map(prodCard).join('')}</div></div></section>`:''}`;
+    document.title=pn(p)+' | New Care Pharma';
+  }
+  setTimeout(()=>{document.querySelectorAll('.fi:not(.visible)').forEach(el=>obs.observe(el))},50);
+}
+function closeMob(){document.getElementById('mm').classList.remove('open')}
+function setLang(l){lang=l;document.documentElement.lang=l;renderAll();go(curPage,curParam)}
+
+// ═══ INIT ═══
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.1});
+renderAll();
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+window.addEventListener('scroll',()=>{document.querySelector('.navbar').style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,.08)':'none'});
+</script>
+</body>
+</html>
